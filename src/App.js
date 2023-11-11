@@ -1,23 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
 
 function App() {
+  const [data, setData] = useState()
+  const url = "https://opendata.resas-portal.go.jp/"
+  const header = {
+    "X-API-KEY" : process.env.REACT_APP_RESAS_API_KEY
+  }
+  useEffect(() => {
+    fetch(url + "api/v1/prefectures", {method: 'GET', headers:header})
+    .then((res) => res.json())
+    .then((data) => setData(data["result"]))
+    .catch((err) => console.log(err))
+  }, [])
+
+  console.log(data)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {data.map((d) => d["prefName"])}
     </div>
   );
 }
