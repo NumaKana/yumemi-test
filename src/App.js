@@ -1,40 +1,39 @@
 import './App.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import Checkbox from './components/Checkbox';
+import Chart from './components/Chart';
 
 function App() {
-  const [prefectures, setPrefectures] = useState([]);
   const [checkedValues, setCheckedValues] = useState([]);
   const [data, setData] = useState([]);
   const url = "https://opendata.resas-portal.go.jp/"
   const header = {
     "X-API-KEY" : process.env.REACT_APP_RESAS_API_KEY
   }
-  useEffect(() => {
-    fetch(url + "api/v1/prefectures", {method: 'GET', headers:header})
-    .then((res) => res.json())
-    .then((data) => setPrefectures(data["result"]))
-    .catch((err) => console.log(err))
-  }, [])
 
   const getperYear = async (values) => {
-    for(let i=0;i<values.length;i++){
-      const query = new URLSearchParams();
-      query.append("prefCode", values[i])
-      query.append("cityCode", "-")
-      await fetch(url + "api/v1/population/composition/perYear?" + query, {method: 'GET', headers:header})
-        .then((res) => res.json())
-        .then((d) => {
-          const result = d["result"]
-          setData([...data, {name: values[i], data: result["data"]}])
-        })
-        .catch((err) => console.log(err))
+    if(values.length > 0){
+      var result = []
+      for(let i=0;i<values.length;i++){
+        var query = new URLSearchParams();
+        query.append("prefCode", values[i])
+        query.append("cityCode", "-")
+        await fetch(url + "api/v1/population/composition/perYear?" + query, {method: 'GET', headers:header})
+          .then((res) => res.json())
+          .then((d) => result.push(d["result"]))
+          .catch((err) => console.log(err))
+        }
+      setData(result)
+    }else{
+      setData([])
     }
     console.log(data)
   }
 
   const handleChange = (e) => {
     if(checkedValues.includes(e.target.id)){
-      const new_array = checkedValues.filter((checkedValue) => checkedValue !== e.target.id)
+      const new_array = checkedValues.filter(checkedValue => checkedValue !== e.target.id)
+      console.log(new_array)
       setCheckedValues(new_array);
       getperYear(new_array)
     }else{
@@ -46,28 +45,9 @@ function App() {
 
   return (
     <div className="App">
-      <div className='flex'>
-        {prefectures.map(d => {
-          return(
-            <div className='check'>
-              <label>
-                <input 
-                  id={d["prefCode"]}
-                  type='checkbox'
-                  value={d["prefName"]}
-                  onChange={handleChange}
-                />
-                {d["prefName"]}
-              </label>
-            </div>
-          )
-        })}
-      </div>
-      {data.map(d => {
-        return(
-          <li>{d["name"]}</li>
-        )
-      })} 
+      <Checkbox handleChange={handleChange}/>
+      {console.log(data)}
+      <Chart data={data}/>
     </div>
   );
 }
