@@ -12,6 +12,7 @@ function Checkbox(props){
         .then((res) => res.json())
         .then((data) => setPrefectures(data["result"]))
         .catch((err) => console.log(err))
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [])
 
       return (
