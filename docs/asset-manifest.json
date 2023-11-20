@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/yumemi-test/static/css/main.9e35c4b8.css",
-    "main.js": "/yumemi-test/static/js/main.6cd24198.js",
+    "main.js": "/yumemi-test/static/js/main.07226a8e.js",
     "static/js/787.63cae449.chunk.js": "/yumemi-test/static/js/787.63cae449.chunk.js",
     "index.html": "/yumemi-test/index.html",
     "main.9e35c4b8.css.map": "/yumemi-test/static/css/main.9e35c4b8.css.map",
-    "main.6cd24198.js.map": "/yumemi-test/static/js/main.6cd24198.js.map",
+    "main.07226a8e.js.map": "/yumemi-test/static/js/main.07226a8e.js.map",
     "787.63cae449.chunk.js.map": "/yumemi-test/static/js/787.63cae449.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9e35c4b8.css",
-    "static/js/main.6cd24198.js"
+    "static/js/main.07226a8e.js"
   ]
 }
