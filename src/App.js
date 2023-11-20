@@ -33,7 +33,6 @@ function App() {
   const handleChange = (e) => {
     if(checkedValues.includes(e.target.id)){
       const new_array = checkedValues.filter(checkedValue => checkedValue !== e.target.id)
-      console.log(new_array)
       setCheckedValues(new_array);
       getperYear(new_array)
     }else{
