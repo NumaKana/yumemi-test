@@ -6,6 +6,7 @@ import Chart from './components/Chart';
 function App() {
   const [checkedValues, setCheckedValues] = useState([]);
   const [data, setData] = useState([]);
+  const [radio, setRadio] = useState("総人口");
   const url = "https://opendata.resas-portal.go.jp/"
   const header = {
     "X-API-KEY" : process.env.REACT_APP_RESAS_API_KEY
@@ -27,7 +28,6 @@ function App() {
     }else{
       setData([])
     }
-    console.log(data)
   }
 
   const handleChange = (e) => {
@@ -43,11 +43,18 @@ function App() {
     }
   }
 
+  const changeRadio = (e) => {
+    setRadio(e.target.value)
+  }
+
   return (
     <div className="App">
       <Checkbox handleChange={handleChange}/>
-      {console.log(data)}
-      <Chart data={data}/>
+      <input type='radio' value="総人口" name='population' onChange={changeRadio} checked={radio === "総人口"}/>総人口
+      <input type="radio" value="年少人口" name='population' onChange={changeRadio} checked={radio === "年少人口"}/>年少人口
+      <input type="radio" value="生産年齢人口" name='population' onChange={changeRadio} checked={radio === "生産年齢人口"}/>生産年齢人口
+      <input type="radio" value="老年人口" name='population' onChange={changeRadio} checked={radio === "老年人口"}/>老年人口
+      <Chart data={data} population={radio}/>
     </div>
   );
 }
