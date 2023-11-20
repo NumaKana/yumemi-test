@@ -4,7 +4,6 @@ import Checkbox from './components/Checkbox';
 import Chart from './components/Chart';
 
 function App() {
-  console.log(process.env.REACT_APP_RESAS_API_KEY)
   const [checkedValues, setCheckedValues] = useState([]);
   const [data, setData] = useState([]);
   const url = "https://opendata.resas-portal.go.jp/"

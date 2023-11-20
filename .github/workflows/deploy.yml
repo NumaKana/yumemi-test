@@ -17,6 +17,10 @@ jobs:
           node-version: 16
       - run: npm ci
       - run: npm test
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        REACT_APP_RESAS_API_KEY: ${{ secrets.RESAS_API_KEY }}
+
 
   publish-gpr:
     needs: build
